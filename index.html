@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Compass | CIT Coimbatore</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <div class="logo-area">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f9/Coimbatore_Institute_of_Technology_logo.png/220px-Coimbatore_Institute_of_Technology_logo.png" alt="CIT Logo" class="cit-logo">
+        <div class="brand">
+            <span class="main-title">CAMPUS COMPASS</span>
+            <span class="sub-title">SMART AR NAVIGATION</span>
+        </div>
+    </div>
+    <div class="nav-links">
+        <a href="admin.html" class="admin-link">🛡️ Staff Login</a>
+    </div>
+</header>
+
+<div class="container">
+    <div class="grid">
+        <div class="card glass">
+            <h3>Plan Your Route</h3>
+            
+            <label>I am a...</label>
+            <div class="role-selector" id="roleSelector">
+                <div class="role-chip active" onclick="setRole(this, 'Student')">Student</div>
+                <div class="role-chip" onclick="setRole(this, 'Faculty')">Faculty</div>
+                <div class="role-chip" onclick="setRole(this, 'Visitor')">Visitor</div>
+            </div>
+
+            <div class="input-group">
+                <label>Select Campus Block</label>
+                <select id="blockSelect" onchange="populateDestinations()">
+                    <option value="it">IT Block (CSE/IT Dept)</option>
+                    <option value="main">Main Block (Admin)</option>
+                    <option value="library">Library & Digital Center</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Target Destination</label>
+                <select id="destSelect"></select>
+            </div>
+
+            <button class="btn-nav" id="navBtn" onclick="initiateNavigation()">LAUNCH AR GUIDE</button>
+        </div>
+
+        <div class="card shadow">
+            <h3 id="status-title">Navigation Status</h3>
+            
+            <div id="welcome-msg" class="fade-in">
+                <p>Welcome, <span id="user-role-display">Student</span>. Ready for a smarter walk?</p>
+                <div class="campus-preview">
+                    <img src="https://images.unsplash.com/photo-1541339907198-e08756ebafe3?auto=format&fit=crop&w=800" class="hero-img" alt="CIT Campus">
+                </div>
+            </div>
+
+            <div id="ar-display" class="ar-window">
+                <img id="ar-bg" class="ar-frame" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800" alt="Corridor View">
+                <div class="ar-overlay">
+                    <div class="guidance-arrow" id="nav-arrow">↑</div>
+                    <div class="ar-badge">AR MODE: PROCEED STRAIGHT</div>
+                </div>
+            </div>
+
+            <div id="route-text" class="route-info"></div>
+        </div>
+    </div>
+</div>
+
+<script src="navigation.js"></script>
+</body>
+</html>

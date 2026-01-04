@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Gateway | Campus Compass</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+    <div class="login-container card glass shadow" id="loginBox">
+        <h2>🛡️ Staff Gateway</h2>
+        <p>Restricted access for CIT Administrators</p>
+        <input type="password" id="adminPass" placeholder="Enter Access Code" class="admin-input">
+        <button onclick="verifyAccess()" class="btn-nav">UNLOCK ACCESS</button>
+    </div>
+
+    <div id="adminPanel" style="display:none;" class="container fade-in">
+        <div class="card glass">
+            <h2>Admin Console</h2>
+            <p>Welcome back, Administrator.</p>
+            <hr>
+            <div class="admin-tools">
+                <button class="btn-tool">✏️ Edit Room Nodes</button>
+                <button class="btn-tool">📸 Upload New Junction Photos</button>
+                <button class="btn-tool">📈 View Traffic Heatmap</button>
+            </div>
+            <button onclick="location.href='index.html'" class="btn-back">Return to Map</button>
+        </div>
+    </div>
+
+    <script>
+        function verifyAccess() {
+            const pass = document.getElementById('adminPass').value;
+            // Hackathon Demo Password: 'cit'
+            if (pass === 'cit') {
+                document.getElementById('loginBox').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+            } else {
+                alert("Incorrect Access Code!");
+            }
+        }
+    </script>
+</body>
+</html>
