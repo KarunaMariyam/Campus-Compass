@@ -1,58 +1,39 @@
-const campusData = {
-    it: {
-        "Floor 1": ["Programming Lab 1", "Men's Restroom", "Classroom 101"],
-        "Floor 2": ["Department Office", "HOD Cabin", "Classroom 201"],
-        "Floor 3": ["Faculty Cabin - CSE", "M.Tech Lab", "Seminar Hall"]
-    },
-    main: {
-        "Ground Floor": ["Admission Office", "Accounts Section", "COE Desk"],
-        "Floor 1": ["Principal's Office", "Registrar Office"]
-    },
-    library: {
-        "Ground Floor": ["Reference Section", "Digital Library"],
-        "Floor 1": ["Reading Hall", "Thesis Archives"]
-    }
-};
+const citLocations = [
+    { id: 1, name: 'IT Block - Programming Lab 1', block: 'IT Block', floor: '1st Floor', img: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500' },
+    { id: 2, name: 'Main Block - Accounts Section', block: 'Main Block', floor: 'Ground Floor', img: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=500' },
+    { id: 3, name: 'Library - Reference Section', block: 'Library Block', floor: 'Ground Floor', img: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=500' },
+    { id: 4, name: 'COE Office', block: 'Main Block', floor: '1st Floor', img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=500' },
+    { id: 5, name: 'Seminar Hall', block: 'IT Block', floor: '2nd Floor', img: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=500' },
+    { id: 6, name: 'Department Office - CSE', block: 'IT Block', floor: '1st Floor', img: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=500' }
+];
 
-function populateDestinations() {
-    const block = document.getElementById('blockSelect').value;
-    const destSelect = document.getElementById('destSelect');
-    destSelect.innerHTML = "";
-    
-    const floors = campusData[block];
-    for (let floor in floors) {
-        floors[floor].forEach(room => {
-            let opt = document.createElement('option');
-            opt.value = `${floor} | ${room}`;
-            opt.innerText = `${floor} → ${room}`;
-            destSelect.appendChild(opt);
-        });
-    }
-}
+const grid = document.getElementById('pinGrid');
 
-function setRole(element, role) {
-    document.querySelectorAll('.role-chip').forEach(chip => chip.classList.remove('active'));
-    element.classList.add('active');
-    document.getElementById('user-role-display').innerText = role;
-}
-
-function initiateNavigation() {
-    const destination = document.getElementById('destSelect').value;
-    const [floor, room] = destination.split(' | ');
-
-    document.getElementById('welcome-msg').style.display = 'none';
-    document.getElementById('ar-display').style.display = 'block';
-    document.getElementById('status-title').innerText = "Routing to " + room;
-
-    document.getElementById('route-text').innerHTML = `
-        <div class="step-card">
-            <h4>📍 Optimized Path Found</h4>
-            <p>1. Exit your current location and turn right.</p>
-            <p>2. Proceed to the <strong>${floor}</strong> elevator.</p>
-            <p>3. Destination <strong>${room}</strong> is 20m from the exit.</p>
+citLocations.forEach(loc => {
+    const card = document.createElement('div');
+    card.className = 'pin-card';
+    card.onclick = () => openAR(loc);
+    card.innerHTML = `
+        <img src="${loc.img}" alt="${loc.name}">
+        <div class="pin-card-info">
+            <strong>${loc.name}</strong>
+            <small>${loc.block} • ${loc.floor}</small>
         </div>
+    `;
+    grid.appendChild(card);
+});
+
+function openAR(loc) {
+    document.getElementById('arOverlay').style.display = 'flex';
+    document.getElementById('destinationTitle').innerText = loc.name;
+    document.getElementById('viewImage').src = loc.img;
+    document.getElementById('instruction').innerText = `Proceeding to ${loc.floor}`;
+    
+    document.getElementById('stepList').innerHTML = `
+        <p>1. Enter <b>${loc.block}</b> via North Gate.</p>
+        <p>2. Locate the <b>${loc.floor === 'Ground Floor' ? 'corridor' : 'stairs'}</b>.</p>
+        <p>3. Destination <b>${loc.name}</b> is on your right.</p>
     `;
 }
 
-// Initial Call
-window.onload = populateDestinations;
+function closeAR() { document.getElementById('arOverlay').style.display = 'none'; }
